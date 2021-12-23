@@ -34,4 +34,15 @@ public class FileUtils {
             System.exit(0);
           }
     }
+
+    public static String ReadFile(String fname){
+        String program = "";
+        try {
+            program = FileUtils.OpenFile(fname);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("mathsel: compilation error: No File Supplied");
+            System.exit(0);
+        }
+        return program;
+    }
 }
