@@ -15,7 +15,15 @@ class Mathsel {
 
     public static void main(String[] args) {
         // Basic Variable Initialisation
-        String fname = args[0];
+        String fname = "";
+        try {
+            fname = args[0];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("mathsel: compilation error: No File Supplied");
+            System.exit(0);
+        }
+
+
         String filename = Tools.ProgName(fname);
         String compiled_program = Template.program_template;
         String program = FileUtils.ReadFile(fname);
