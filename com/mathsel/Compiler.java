@@ -24,7 +24,12 @@ public class Compiler {
 
             } else if (elems[0].equals("set") && (elems[2].equals("to"))){
                 if (vars.contains(elems[1])){
-                    cprog += String.format("%s=%s;\n", elems[1], elems[3]);
+                    if (elems[1].startsWith("c")){
+                        String str = String.join(" ", Arrays.copyOfRange(elems, 3, elems.length));
+                        cprog += String.format("strcpy(%s,%s);\n", elems[1], str);
+                    } else {
+                        cprog += String.format("%s=%s;\n", elems[1], elems[3]);
+                    }
                 }
 
             } else if (elems[0].equals("input") && (elems[1].equals("to"))){
@@ -101,6 +106,43 @@ public class Compiler {
                     cprog += String.format("%s = pow(%s, ceil((1.0/%s)*100)/100);\n", elems[5], elems[1], elems[3]);
                 }
 
+            } else if (elems[0].equals("clear")){
+                if (vars.contains(elems[1])){
+                    if (elems[1].startsWith("i")){
+                        cprog += String.format("%s=0;\n", elems[1]);
+                    } else if (elems[1].startsWith("d")){
+                        cprog += String.format("%s=0.0;\n", elems[1]);
+                    } else if (elems[1].startsWith("c")){
+                        cprog += String.format("strcpy(%s, \"\");\n", elems[1]);
+                    }
+                }
+
+            } else if (elems[0].equals("push") && (elems[2].equals("to"))){
+                if (vars.contains(elems[1]) && ((Integer.parseInt(elems[3]) < 11) && (Integer.parseInt(elems[3]) > 0))){
+                    if (elems[1].startsWith("i")){
+                        cprog += String.format("isp[%s-1]=%s;\n", elems[3], elems[1]);
+                        cprog += String.format("%s=0;\n", elems[1]);
+                    } else if (elems[1].startsWith("d")){
+                        cprog += String.format("dsp[%s-1]=%s;\n", elems[3], elems[1]);
+                        cprog += String.format("%s=0.0;\n", elems[1]);
+                    } else if (elems[1].startsWith("c")){
+                        cprog += String.format("strcpy(csp + (%s - 1), %s);\n", elems[3], elems[1]);
+                        cprog += String.format("strcpy(%s, \"\");\n", elems[1]);
+                    }
+                }
+            } else if (elems[0].equals("get") && (elems[2].equals("from"))){
+                if (vars.contains(elems[1]) && ((Integer.parseInt(elems[3]) < 11) && (Integer.parseInt(elems[3]) > 0))){
+                    if (elems[1].startsWith("i")){
+                        cprog += String.format("%s=isp[%s-1];\n", elems[1], elems[3]);
+                        cprog += String.format("isp[%s-1]=0;\n", elems[3]);
+                    } else if (elems[1].startsWith("d")){
+                        cprog += String.format("%s=dsp[%s-1];\n", elems[1], elems[3]);
+                        cprog += String.format("dsp[%s-1]=0.0;\n", elems[3]);
+                    } else if (elems[1].startsWith("c")){
+                        cprog += String.format("strcpy(%s, csp + (%s - 1));\n", elems[1], elems[3]);
+                        cprog += String.format("strcpy(csp + (%s - 1), \"\");\n", elems[3]);
+                    }
+                }
             }
         }
         return cprog;

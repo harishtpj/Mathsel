@@ -30,6 +30,6 @@ public class Tools {
     public static String[] PrepareForCompile(String program){
         program = program.replace("\n", "");
         program = program.replace("\t", "");
-        return program.split(Pattern.quote("."));
+        return program.split(Pattern.quote(".!"));
     }
 }
