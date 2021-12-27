@@ -2,6 +2,7 @@ package com.mathsel;
 
 public class Template {
     public static String program_template = "#include <stdio.h>\n"
+                                          + "#include <math.h>\n"
                                           + "int main(){\n"
                                           + "int iax, ibx, icx, idx;\n"
                                           + "double dax, dbx, dcx, ddx;\n"

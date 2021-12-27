@@ -71,6 +71,36 @@ public class Compiler {
                     cprog += String.format("%s /= %s;\n", elems[3], elems[1]);
                 }
                 
+            } else if (elems[0].equals("square") && (elems[2].equals("to"))){
+                if (vars.contains(elems[3])){
+                    cprog += String.format("%s = pow(%s, 2.0);\n", elems[3], elems[1]);
+                }
+
+            } else if (elems[0].equals("sqrt") && (elems[2].equals("to"))){
+                if (vars.contains(elems[3])){
+                    cprog += String.format("%s = sqrt(%s);\n", elems[3], elems[1]);
+                }
+
+            } else if (elems[0].equals("cube") && (elems[2].equals("to"))){
+                if (vars.contains(elems[3])){
+                    cprog += String.format("%s = pow(%s, 3.0);\n", elems[3], elems[1]);
+                }
+
+            } else if (elems[0].equals("cbrt") && (elems[2].equals("to"))){
+                if (vars.contains(elems[3])){
+                    cprog += String.format("%s = pow(%s, ceil((1/3.0)*100)/100);\n", elems[3], elems[1]);
+                }
+
+            } else if (elems[0].equals("pow") && (elems[2].equals("with")) && (elems[4].equals("to"))){
+                if (vars.contains(elems[5])){
+                    cprog += String.format("%s = pow(%s, %s);\n", elems[5], elems[1], elems[3]);
+                }
+
+            } else if (elems[0].equals("root") && (elems[2].equals("with")) && (elems[4].equals("to"))){
+                if (vars.contains(elems[5])){
+                    cprog += String.format("%s = pow(%s, ceil((1.0/%s)*100)/100);\n", elems[5], elems[1], elems[3]);
+                }
+
             }
         }
         return cprog;
