@@ -2,27 +2,25 @@
 use File::Copy;
 use v5.10;
 use warnings;
+use strict "vars";
 
 sub clean {
-    move("hello.c", "test_files\\hello.c") or die "move failed: $!";
-    move("hello.exe", "test_files\\hello.exe") or die "move failed: $!";
+    my $filename = $_[1];
+    move("$filename.c", "test_files\\$filename.c") or die "move failed: $!";
+    move("$filename.exe", "test_files\\$filename.exe") or die "move failed: $!";
     say "Cleaned File System";
 }
 
 sub run {
+    my $filename = $_[1];
     system "javac -cp \"\%CLASSPATH\%;lib\\commons-cli-1.5.0.jar\" Mathsel.java";
-    system "java -cp \"\%CLASSPATH\%;lib\\commons-cli-1.5.0.jar\" Mathsel -r test_files\\hello.me";
-}
-
-sub cdel {
-    unlink "test_files\\hello.c";
-    unlink "test_files\\hello.exe";
-    say "Cleaned File System by deleting files";
+    system "java -cp \"\%CLASSPATH\%;lib\\commons-cli-1.5.0.jar\" Mathsel -r $filename";
 }
 
 sub fresh {
-    unlink "hello.c";
-    unlink "hello.exe";
+    my $filename = $_[1];
+    unlink "$filename.c";
+    unlink "$filename.exe";
     say "Cleaned File System by deleting files";
 }
 
@@ -31,7 +29,8 @@ sub compile {
 }
 
 sub runonly {
-    system "java -cp \"\%CLASSPATH\%;lib\\commons-cli-1.5.0.jar\" Mathsel";
+    my $flags = $_[1];
+    system "java -cp \"\%CLASSPATH\%;lib\\commons-cli-1.5.0.jar\" Mathsel $flags";
 }
 
 unless (caller){

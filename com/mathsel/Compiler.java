@@ -37,6 +37,40 @@ public class Compiler {
                         cprog += String.format("scanf(\"%%[^\n]%%*c\", %s);\n", elems[2]);
                     }
                 }
+
+            } else if (elems[0].equals("!:")){
+                continue;
+
+            } else if (elems[0].equals("incr")){
+                if (vars.contains(elems[1]) && (elems[1].startsWith("i") || elems[1].startsWith("d"))){
+                    cprog += String.format("++%s;\n", elems[1]);
+
+                }
+            } else if (elems[0].equals("decr")){
+                if (vars.contains(elems[1]) && (elems[1].startsWith("i") || elems[1].startsWith("d"))){
+                    cprog += String.format("--%s;\n", elems[1]);
+
+                }
+            } else if (elems[0].equals("add") && (elems[2].equals("to"))){
+                if (vars.contains(elems[1])){
+                    cprog += String.format("%s += %s;\n", elems[3], elems[1]);
+                }
+
+            } else if (elems[0].equals("subtract") && (elems[2].equals("from"))){
+                if (vars.contains(elems[1])){
+                    cprog += String.format("%s -= %s;\n", elems[3], elems[1]);
+                }
+                
+            } else if (elems[0].equals("multiply") && (elems[2].equals("with"))){
+                if (vars.contains(elems[1])){
+                    cprog += String.format("%s *= %s;\n", elems[3], elems[1]);
+                }
+                
+            } else if (elems[0].equals("divide") && (elems[2].equals("into"))){
+                if (vars.contains(elems[1])){
+                    cprog += String.format("%s /= %s;\n", elems[3], elems[1]);
+                }
+                
             }
         }
         return cprog;
