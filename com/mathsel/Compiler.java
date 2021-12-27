@@ -287,6 +287,8 @@ public class Compiler {
                         lno
                     ));
                 }
+            } else {
+                cprog += stmt+"\n";
             }
         }
         return cprog;
