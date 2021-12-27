@@ -10,14 +10,28 @@ sub clean {
 }
 
 sub run {
-    system "javac Mathsel.java";
-    system "java Mathsel test_files\\hello.me";
+    system "javac -cp \"\%CLASSPATH\%;lib\\commons-cli-1.5.0.jar\" Mathsel.java";
+    system "java -cp \"\%CLASSPATH\%;lib\\commons-cli-1.5.0.jar\" Mathsel -r test_files\\hello.me";
 }
 
 sub cdel {
     unlink "test_files\\hello.c";
     unlink "test_files\\hello.exe";
     say "Cleaned File System by deleting files";
+}
+
+sub fresh {
+    unlink "hello.c";
+    unlink "hello.exe";
+    say "Cleaned File System by deleting files";
+}
+
+sub compile {
+    system "javac -cp \"\%CLASSPATH\%;lib\\commons-cli-1.5.0.jar\" Mathsel.java";
+}
+
+sub runonly {
+    system "java -cp \"\%CLASSPATH\%;lib\\commons-cli-1.5.0.jar\" Mathsel";
 }
 
 unless (caller){

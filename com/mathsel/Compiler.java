@@ -26,6 +26,17 @@ public class Compiler {
                 if (vars.contains(elems[1])){
                     cprog += String.format("%s=%s;\n", elems[1], elems[3]);
                 }
+
+            } else if (elems[0].equals("input") && (elems[1].equals("to"))){
+                if (vars.contains(elems[2])){
+                    if (elems[2].startsWith("i")){
+                        cprog += String.format("scanf(\"%%d\", &%s);\n", elems[2]);
+                    } else if (elems[2].startsWith("d")){
+                        cprog += String.format("scanf(\"%%lf\", &%s);\n", elems[2]);
+                    } else if (elems[2].startsWith("c")){
+                        cprog += String.format("scanf(\"%%[^\n]%%*c\", %s);\n", elems[2]);
+                    }
+                }
             }
         }
         return cprog;
