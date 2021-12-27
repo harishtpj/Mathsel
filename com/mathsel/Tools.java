@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+import com.mathsel.errors.CompilerError;
+import com.mathsel.errors.RuntimeError;
+
 public class Tools {
     public static Process RunCommand(String cmd){
         Process process = null;
@@ -27,7 +30,15 @@ public class Tools {
             errorReader.close();
             
         } catch (IOException e) {
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            
+            String errmsg = "Insufficient tools to compile program\n"
+                          + "Java Error Stack Trace:\n"
+                          + sw.toString();
+
+            Tools.ThrowError(new CompilerError("NoToolError", errmsg));
           }
         return process;
     }
@@ -48,5 +59,13 @@ public class Tools {
         program = program.replace("\n", "");
         program = program.replace("\t", "");
         return program.split(Pattern.quote(".!"));
+    }
+
+    public static void ThrowError(CompilerError error){
+        error.Run();
+    }
+
+    public static void ThrowError(RuntimeError error){
+        error.Run();
     }
 }
