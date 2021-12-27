@@ -27,5 +27,5 @@ println "Hello, World!".!
 ```
 Run ```java -jar Mathsel.jar -r hello.me ``` to get the executable for program. Run the executable to get the output of the program. You'll also get a ```hello.c``` file for inspection.
 
-# 👨🏻‍💻 Created By
+# 👨‍💻 Created By
 - ## M.V.Harish Kumar
