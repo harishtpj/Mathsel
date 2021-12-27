@@ -1,5 +1,6 @@
 package com.mathsel;
 
+import java.io.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
@@ -9,6 +10,22 @@ public class Tools {
         Process process = null;
         try {
             process = Runtime.getRuntime().exec(cmd);
+            String line;
+
+            // STDOUT
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            reader.close();
+
+            // STDERR
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            while ((line = errorReader.readLine()) != null) {
+                System.out.println(line);
+            }
+            errorReader.close();
+            
         } catch (IOException e) {
             e.printStackTrace();
           }
