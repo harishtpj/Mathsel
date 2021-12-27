@@ -43,6 +43,7 @@ class Mathsel {
             if (cmd.hasOption("r")) {
                 String fname = cmd.getOptionValue("run");
                 Run(fname);
+                System.exit(0);
             }
             if (cmd.hasOption("h")) {
                 Meta.HelpMsg(helper, options);
@@ -50,7 +51,9 @@ class Mathsel {
             if (cmd.hasOption("v")) {
                 System.out.printf("This is Mathsel v%s - The Math Statement Language\n", Meta.version);
                 System.out.printf("Created by %s\n", Meta.author);
+                System.exit(0);
             }
+            Meta.HelpMsg(helper, options);
         } catch (ParseException e) {
             System.out.println(e.getMessage());
             Meta.HelpMsg(helper, options);

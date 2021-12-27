@@ -9,7 +9,7 @@ public class Meta {
 
 
     public static void HelpMsg(HelpFormatter helper, Options options){
-        helper.printHelp("mathsel", options);
+        helper.printHelp("mathsel [options]", options);
         System.exit(0);
     }
 }
